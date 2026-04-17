@@ -7,25 +7,21 @@ env:
 phases:
   install:
     runtime-versions:
-      version: 0.2
-      phases:
-        install:
-          runtime-versions:
-            python: 3.8
-          commands:
-            - echo Installing SAM CLI...
-            - pip install --upgrade aws-sam-cli
-
-        build:
-          commands:
-            - echo Building the SAM application...
-            - cd Lambda/template
-            - sam build
-        post_build:
-          commands:
-            - echo Build completed on `date`
-            - echo Packaging the SAM application...
-            - cd Lambda/template
-            - sam package --template-file template.yml --output-template-file packaged.yaml --s3-bucket cf-templates-1qtu6g2652m69-us-east-1 --s3-prefix sam
-            - echo Deploying the SAM application...
-            - sam deploy --template-file packaged.yaml --stack-name lambda-stack --capabilities CAPABILITY_IAM
+      python: 3.8
+    commands:
+      - echo Installing SAM CLI...
+      - pip install --upgrade aws-sam-cli
+  build:
+    commands:
+      - echo Building the SAM application...
+      - cd template
+      - echo Building the SAM application...
+      - sam build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Packaging the SAM application...
+      - cd template
+      - sam package --output-template-file packaged.yaml --s3-bucket cf-templates-1qtu6g2652m69-us-east-1 --s3-prefix sam
+      - echo Deploying the SAM application...
+      - sam deploy --template-file packaged.yaml --stack-name lambda-stack --capabilities CAPABILITY_IAM

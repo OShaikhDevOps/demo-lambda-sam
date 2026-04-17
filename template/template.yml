@@ -5,6 +5,6 @@ Resources:
   MyFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./code
-      Handler: app.lambda_handler
+      CodeUri: ../code
+      Handler: main.lambda_handler
       Runtime: python3.8
