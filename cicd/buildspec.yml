@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - echo Installing dependencies...
+      - pip install -r requirements.txt -t .
+
+  build:
+    commands:
+      - cd ..\template
+      - echo Building the SAM application...
+      - sam build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Packaging the SAM application...
+      - sam package --output-template-file packaged.yaml --s3-bucket s3://cf-templates-1qtu6g2652m69-us-east-1/sam/
+      - echo Deploying the SAM application...
+      - sam deploy --template-file packaged.yaml --stack-name lambda-stack --capabilities CAPABILITY_IAM
