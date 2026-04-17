@@ -21,7 +21,6 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Packaging the SAM application...
-      - cd template
       - sam package --output-template-file packaged.yaml --s3-bucket cf-templates-1qtu6g2652m69-us-east-1 --s3-prefix sam
       - echo Deploying the SAM application...
       - sam deploy --template-file packaged.yaml --stack-name lambda-stack --capabilities CAPABILITY_IAM
