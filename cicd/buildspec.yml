@@ -1,14 +1,19 @@
 version: 0.2
+env:
+  variables:
+    AWS_DEFAULT_REGION: us-east-1
+  
+
 phases:
   install:
     runtime-versions:
       python: 3.8
     commands:
-      - echo Installing dependencies...
-      - pip install -r requirements.txt -t .
-
+      - echo Installing SAM CLI...
+      - pip install --upgrade aws-sam-cli
   build:
     commands:
+      - echo Building the SAM application...
       - cd ..\template
       - echo Building the SAM application...
       - sam build
@@ -16,6 +21,6 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Packaging the SAM application...
-      - sam package --output-template-file packaged.yaml --s3-bucket s3://cf-templates-1qtu6g2652m69-us-east-1/sam/
+      - sam package --output-template-file packaged.yaml --s3-bucket cf-templates-1qtu6g2652m69-us-east-1 --s3-prefix sam
       - echo Deploying the SAM application...
       - sam deploy --template-file packaged.yaml --stack-name lambda-stack --capabilities CAPABILITY_IAM
